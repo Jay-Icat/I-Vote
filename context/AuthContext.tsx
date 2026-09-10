@@ -89,7 +89,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     } catch (error: unknown) {
       console.error("Google Sign-In error:", error);
-      throw error;
+      const code = typeof error === "object" && error && "code" in error ? (error as { code: string }).code : "";
+      if (code === "auth/unauthorized-domain" && typeof window !== "undefined") {
+        alert(
+          `Firebase Error: auth/unauthorized-domain\n\nYour current domain (${window.location.hostname}) is not authorized in Firebase.\n\nTo fix:\n1. Open Firebase Console -> Authentication -> Settings -> Authorized domains\n2. Click "Add domain"\n3. Enter "${window.location.hostname}" and click Save.`
+        );
+      }
+      return;
     } finally {
       setFirebaseLoading(false);
     }
