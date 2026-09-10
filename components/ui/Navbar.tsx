@@ -114,9 +114,9 @@ export default function Navbar() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute right-0 mt-3 w-60 rounded-3xl glass-panel p-3 z-50 border border-[#38BDF8]/30"
+                    className="absolute right-0 mt-3 w-64 rounded-3xl bg-[#030406]/95 backdrop-blur-3xl p-3 z-50 border border-[#38BDF8]/30 shadow-[0_10px_40px_rgba(0,0,0,0.8)]"
                   >
-                    <div className="px-4 py-3 bg-[#38BDF8]/5 backdrop-blur-md rounded-2xl mb-2">
+                    <div className="px-4 py-3 bg-white/5 border border-white/10 rounded-2xl mb-2">
                       <p className="text-sm font-bold text-[#F8FAFC] truncate">{user.displayName || "GUEST_USER"}</p>
                       <p className="text-xs text-[#94A3B8] truncate mt-0.5">{user.email || "NO_UPLINK"}</p>
                     </div>
@@ -168,7 +168,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden mt-3 max-w-4xl mx-auto glass-panel rounded-3xl overflow-hidden"
+            className="md:hidden mt-3 max-w-4xl mx-auto bg-[#030406]/95 backdrop-blur-3xl border border-[#38BDF8]/30 rounded-3xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.8)]"
           >
             <div className="p-4 space-y-4">
               <nav className="flex flex-col gap-2">

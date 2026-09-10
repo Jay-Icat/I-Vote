@@ -21,11 +21,12 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "ICAT Vote | Arena Protocol",
+  title: "ICAT Vote",
   description: "Official Campus Voting Arena",
   manifest: "/manifest.json",
   icons: {
     icon: "/icat-emblem.png",
+    shortcut: "/icat-emblem.png",
     apple: "/icat-emblem.png",
   },
 };
