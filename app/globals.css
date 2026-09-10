@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #050505;
+  --color-foreground: #F8FAFC;
+  --color-neon-blue: #38BDF8;
+  --color-neon-green: #4ADE80;
+  --color-neon-red: #EF4444;
+  --color-glass-dark: rgba(14, 165, 233, 0.05); /* Transparent blue tint */
+  --color-glass-border: rgba(56, 189, 248, 0.15); /* Light blue border */
+
+  --font-sans: var(--font-sans);
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  :root {
+    --bg-color: #030406;
+  }
+  
+  html {
+    background-color: var(--bg-color);
+    color: #F8FAFC;
+    height: 100dvh;
+    width: 100vw;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  body {
+    height: 100dvh;
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--bg-color);
+    /* Animated subtle gradient background */
+    background-image: 
+      radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.15), transparent 40%),
+      radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.15), transparent 40%),
+      radial-gradient(circle at 50% 100%, rgba(56, 189, 248, 0.1), transparent 50%);
+    background-attachment: fixed;
+    font-family: var(--font-sans);
+  }
+
+  /* Custom Webkit Scrollbar for inner elements */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(56, 189, 248, 0.3);
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    background: var(--color-glass-dark);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--color-glass-border);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  }
+
+  .glass-panel-interactive {
+    background: var(--color-glass-dark);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--color-glass-border);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .glass-panel-interactive:hover {
+    background: rgba(15, 15, 18, 0.8);
+    border-color: rgba(56, 189, 248, 0.3);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 8px 32px 0 rgba(0, 0, 0, 0.6), 0 0 20px 0 rgba(56, 189, 248, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .playing-card {
+    position: relative;
+    background: var(--color-glass-dark);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    transform: perspective(1000px) translateY(0) scale(1) rotateX(0) rotateY(0);
+  }
+
+  .playing-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    padding: 2px;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.5), rgba(168, 85, 247, 0.1), rgba(56, 189, 248, 0.5));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.5;
+    transition: opacity 0.4s ease;
+    background-size: 200% 200%;
+    pointer-events: none;
+  }
+
+  .playing-card:hover {
+    transform: perspective(1000px) translateY(-10px) scale(1.02) rotateX(4deg) rotateY(-4deg);
+    box-shadow: -10px 20px 40px -10px rgba(56, 189, 248, 0.4);
+  }
+
+  .playing-card:hover::before {
+    opacity: 1;
+    background: linear-gradient(135deg, #38BDF8, #A855F7, #38BDF8);
+    animation: borderRotate 3s linear infinite;
+  }
+
+  .neon-outline {
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.5), inset 0 0 10px rgba(56, 189, 248, 0.5);
+    border: 1px solid rgba(56, 189, 248, 0.8);
+  }
+
+  .neon-text-blue {
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.5), 0 0 20px rgba(56, 189, 248, 0.3);
+  }
+  
+  .neon-text-green {
+    text-shadow: 0 0 10px rgba(74, 222, 128, 0.5), 0 0 20px rgba(74, 222, 128, 0.3);
+  }
+
+  /* Game-like CRT scanlines overlay */
+  .scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,0),
+      rgba(255,255,255,0) 50%,
+      rgba(0,0,0,0.05) 50%,
+      rgba(0,0,0,0.05)
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* Liquid progress bar gradient */
+  .liquid-fill {
+    background: linear-gradient(90deg, #38BDF8, #A855F7, #38BDF8);
+    background-size: 200% 100%;
+    animation: flow 3s linear infinite;
+  }
+
+  /* Hide scrollbar completely for specific elements */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@keyframes flow {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+@keyframes scanline-scroll {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes borderRotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
